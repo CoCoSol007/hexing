@@ -42,21 +42,25 @@ The library uses the `Number` trait to allow generic calculations with various n
 Represents a position in a hexagonal grid with coordinates `T`. Coordinates are in axial format `(x, y)`.
 
 - **Creation**:
+
   ```rust
   let pos = HexPosition::new(1, 2);
   ```
 
 - **Conversion to Pixel Coordinates**:
+
   ```rust
   let pixel_coords = pos.to_pixel_coordinates();
   ```
 
 - **Distance Calculation**:
+
   ```rust
   let distance = pos.distance(HexPosition::new(3, 4));
   ```
 
 - **Ring Iterators**:
+
   ```rust
   for ring_pos in pos.ring(2) {
       println!("{:?}", ring_pos);
@@ -64,6 +68,7 @@ Represents a position in a hexagonal grid with coordinates `T`. Coordinates are 
   ```
 
 - **Spiral Iterators**:
+
   ```rust
   for spiral_pos in pos.spiral(2) {
       println!("{:?}", spiral_pos);
@@ -83,6 +88,7 @@ Enum representing the six possible directions in a hexagonal grid.
   - `DownRight`
 
 - **Convert to Vector**:
+
   ```rust
   let direction = HexDirection::Right;
   let vector = direction.to_vector();
@@ -135,26 +141,16 @@ for pos in spiral {
 
 ### Full Documentation
 
-For more detailed documentation and additional explanations, please refer to the [online documentation](https://www.redblobgames.com/grids/hexagons/).
+For more detailed documentation and additional explanations about hexagonal grids, please refer to the [Red Blob Games hexagonal grid documentation](https://www.redblobgames.com/grids/hexagons/).
 
 ### Installation
 
-ToDo
-
-<!-- Add `hexing` to your `Cargo.toml`:
+Add `hexing` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
 hexing = "0.1"
-``` -->
-
-### Full Documentation
-
-For more detailed documentation and additional explanations about hexagonal grids, please refer to the [Red Blob Games hexagonal grid documentation](https://www.redblobgames.com/grids/hexagons/).
-
-### Contributing
-
-Contributions are welcome! If you wish to contribute to `hexing`, please submit a pull request on [GitHub](https://github.com/yourusername/hexing).
+```
 
 <!-- You have to change every link to the great repo -->
 
