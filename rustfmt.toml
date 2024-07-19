@@ -1,0 +1,18 @@
+use_try_shorthand = true
+use_field_init_shorthand = true
+
+version = "Two"
+error_on_line_overflow = true
+error_on_unformatted = true
+
+format_code_in_doc_comments = true
+format_macro_bodies = true
+format_macro_matchers = true
+format_strings = true
+
+imports_granularity = "Module"
+group_imports = "StdExternalCrate"
+
+normalize_doc_attributes = true
+normalize_comments = true
+wrap_comments = true
