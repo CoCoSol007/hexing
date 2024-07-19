@@ -23,7 +23,11 @@ keywords = [
   "Transformation",
   "Math"
 ]
-
+exclude = [
+    ".github/*",
+    "rustfmt.toml",
+    ".gitignore",
+]
 
 [lints.rust]
 missing_docs = "warn"
