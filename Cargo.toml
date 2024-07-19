@@ -6,6 +6,24 @@ description = "A basic Rust library to manipulate hexagonal grids."
 repository = "https://github.com/CoCoSol007/hexing"
 authors = ["CoCoSol"]
 license = "GPLv3"
+readme = "README.md"
+keywords = [
+  "Hex Grids",
+  "Rust",
+  "Hex Coordinates",
+  "Distance",
+  "Grid Tools",
+  "Positions",
+  "Pixel Conversion",
+  "Ring Iterators",
+  "Spiral Iterators",
+  "Axial",
+  "Algorithms",
+  "Geometry",
+  "Transformation",
+  "Math"
+]
+
 
 [lints.rust]
 missing_docs = "warn"
