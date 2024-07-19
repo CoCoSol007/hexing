@@ -15,3 +15,6 @@ missing_docs_in_private_items = "warn"
 unwrap_in_result = "warn"
 unwrap_used = "warn"
 nursery = { level = "warn", priority = -1 }
+
+[dependencies]
+paste = "1.0.15"
