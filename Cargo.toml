@@ -5,7 +5,7 @@ edition = "2021"
 description = "A basic Rust library to manipulate hexagonal grids."
 repository = "https://github.com/CoCoSol007/hexing"
 authors = ["CoCoSol"]
-license = "GPLv3"
+license = "GPL-3.0"
 readme = "README.md"
 keywords = [
   "Hex Grids",
