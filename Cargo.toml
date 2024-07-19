@@ -1,11 +1,11 @@
 [package]
-name = "repo_name"
+name = "hexing"
 version = "0.1.0"
 edition = "2021"
-description = "repo_description"
-repository = "repo_url"
-authors = ["author_name"]
-license = "MIT OR Apache-2.0"
+description = "A basic Rust library to manipulate hexagonal grids."
+repository = "https://github.com/CoCoSol007/hexing"
+authors = ["CoCoSol"]
+license = "GPLv3"
 
 [lints.rust]
 missing_docs = "warn"
