@@ -35,17 +35,29 @@ pub trait Number:
 
     /// Returns the maximum of `self` and `other`.
     fn max(self, other: Self) -> Self {
-        if self > other { self } else { other }
+        if self > other {
+            self
+        } else {
+            other
+        }
     }
 
     /// Returns the minimum of `self` and `other`.
     fn min(self, other: Self) -> Self {
-        if self < other { self } else { other }
+        if self < other {
+            self
+        } else {
+            other
+        }
     }
 
     /// Returns the absolute value of `self`.
     fn abs(self) -> Self {
-        if self < Self::ZERO { -self } else { self }
+        if self < Self::ZERO {
+            -self
+        } else {
+            self
+        }
     }
 
     /// Converts an `usize` to `Self`.
@@ -274,10 +286,11 @@ impl<T: Number> HexPosition<T> {
     /// assert_eq!(a.distance(b), 3);
     /// ```
     pub fn distance(self, other: Self) -> T {
-        (self.0 - other.0).abs()
+        (self.0 - other.0)
+            .abs()
             .max((self.1 - other.1).abs())
             .max((-self.0 - self.1 - (-other.0 - other.1)).abs())
-    }    
+    }
 
     /// Returns the hexagonal ring of the given radius.
     /// If you want to learn more about hexagonal grids, check the
