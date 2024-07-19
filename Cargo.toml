@@ -8,20 +8,11 @@ authors = ["CoCoSol"]
 license = "GPL-3.0"
 readme = "README.md"
 keywords = [
-  "Hex Grids",
-  "Rust",
-  "Hex Coordinates",
-  "Distance",
-  "Grid Tools",
-  "Positions",
-  "Pixel Conversion",
-  "Ring Iterators",
-  "Spiral Iterators",
-  "Axial",
-  "Algorithms",
-  "Geometry",
-  "Transformation",
-  "Math"
+  "hexing",
+  "hexagon",
+  "hexagonal",
+  "math",
+  "grid",
 ]
 exclude = [
     ".github/*",
