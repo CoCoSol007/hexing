@@ -44,21 +44,25 @@ The library uses the `Number` trait to allow generic calculations with various n
 Represents a position in a hexagonal grid with coordinates `T`. Coordinates are in axial format `(x, y)`.
 
 - **Creation**:
+Creates a new [HexPosition] with the given `q` and `r` coordinates in an axial format. Coordinates are explained in this [documentation](https://www.redblobgames.com/grids/hexagons/#coordinates).
 
   ```rust
   let pos = HexPosition::new(1, 2);
+  let pos2 = HexPosition(3, 4);
 
   // Constant: The origin of the hexagonal grid.
   let origin = HexPosition::ORIGIN;
   ```
 
 - **Conversion to Pixel Coordinates**:
+Converts the current [HexPosition] into a pixel coordinate. Basically, it converts a position in a hexagonal grid to a position in a orthogonal grid.
 
   ```rust
   let pixel_coords = pos.to_pixel_coordinates();
   ```
 
 - **Distance Calculation**:
+Calculates the distance between two hexagonal positions, using the [Manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry).
 
   ```rust
   let distance = pos.distance(HexPosition::new(3, 4));
@@ -79,6 +83,7 @@ Will apply a central symmetric reflection around the origin.
   ```
 
 - **Ring Iterators**:
+A iterator that returns positions in a ring around a central position. The iterator will return positions in a ring with the given radius.
 
   ```rust
   for ring_pos in pos.ring(2) {
@@ -87,6 +92,7 @@ Will apply a central symmetric reflection around the origin.
   ```
 
 - **Spiral Iterators**:
+A iterator that returns positions in a spiral around a central position. The iterator will return positions in a spiral with the given radius.
 
   ```rust
   for spiral_pos in pos.spiral(2) {
@@ -110,14 +116,15 @@ A iterator that returns positions along a line between two hexagonal positions.
 Enum representing the six possible directions in a hexagonal grid.
 
 - **Available Directions**:
-  - `Right`
-  - `UpRight`
-  - `UpLeft`
-  - `Left`
-  - `DownLeft`
-  - `DownRight`
+  - `Right` (1, 0)
+  - `UpRight` (1, -1)
+  - `UpLeft` (0, -1)
+  - `Left` (-1, 0)
+  - `DownLeft` (-1, 1)
+  - `DownRight` (0, 1)
 
 - **Convert to Vector**:
+You can convert a [HexDirection] to a [HexPosition] by using the `to_vector` method.
 
   ```rust
   let direction = HexDirection::Right;
@@ -127,6 +134,20 @@ Enum representing the six possible directions in a hexagonal grid.
 ### Usage Examples
 
 Here are some examples to illustrate the features of `hexing`.
+
+#### Creating Hexagonal Positions
+
+```rust
+use hexing::HexPosition;
+
+let pos = HexPosition::new(1, 2);
+let pos2 = HexPosition(3, 4);
+let origin = HexPosition::ORIGIN;
+
+println!("Position 1: {:?}", pos);
+println!("Position 2: {:?}", pos2);
+println!("Origin: {:?}", origin);
+```
 
 #### Conversion to Pixel Coordinates
 
@@ -167,6 +188,51 @@ let spiral = center.spiral(2);
 for pos in spiral {
     println!("Spiral position: {:?}", pos);
 }
+```
+
+#### Rotation of Hexagonal Position
+
+```rust
+use hexing::HexPosition;
+let rotation = 120;
+let pos = HexPosition::new(1, 2);
+let rotated_pos = pos.rotation(rotation/60); // Rotates 120 degrees
+println!("Rotated Position: {:?}", rotated_pos);
+```
+
+#### Reflection of Hexagonal Position
+
+```rust
+use hexing::HexPosition;
+
+let pos = HexPosition::new(1, 2);
+let reflected_pos = pos.reflect();
+println!("Reflected Position: {:?}", reflected_pos);
+```
+
+#### Line Iterator
+
+```rust
+use hexing::HexPosition;
+
+let start = HexPosition::new(0, 0);
+let end = HexPosition::new(3, -3);
+for pos in start.line(end) {
+    println!("Line Position: {:?}", pos);
+}
+```
+
+#### Using HexDirection
+
+```rust
+use hexing::HexDirection;
+
+let direction = HexDirection::UpRight;
+let vector = direction.to_vector();
+println!("Vector for Right Direction: {:?}", vector);
+
+let new_position = HexPosition::new(0, 0) + vector * 3;
+println!("New Position after moving Right: {:?}", new_position);
 ```
 
 ### Full Documentation
