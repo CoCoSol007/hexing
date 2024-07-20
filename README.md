@@ -45,6 +45,9 @@ Represents a position in a hexagonal grid with coordinates `T`. Coordinates are 
 
   ```rust
   let pos = HexPosition::new(1, 2);
+
+  // Constant: The origin of the hexagonal grid.
+  let origin = HexPosition::ORIGIN;
   ```
 
 - **Conversion to Pixel Coordinates**:
