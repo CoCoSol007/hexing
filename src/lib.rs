@@ -2,65 +2,64 @@
 //! All functions related to calculations in a hexagonal grid.
 //! For more information, check the [documentation](https://crates.io/crates/hexing) or the [GitHub repository](https://github.com/cocosol007/hexing).
 //! Note that all algorithms are inspired by the [Hexagonal Grid Algorithm](https://www.redblobgames.com/grids/hexagons/).
-//! 
+//!
 //! ## Copyright (C) 2024  CoCoSol
-//! 
+//!
 //! This program is free software: you can redistribute it and/or modify
 //! it under the terms of the GNU General Public License as published by
 //! the Free Software Foundation, either version 3 of the License, or
 //! (at your option) any later version.
-//! 
+//!
 //! This program is distributed in the hope that it will be useful,
 //! but WITHOUT ANY WARRANTY; without even the implied warranty of
 //! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //! GNU General Public License for more details.
-//! 
+//!
 //! You should have received a copy of the GNU General Public License
 //! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-//! 
+//!
 //! ## Usages
-//! 
+//!
 //! ```rust
+//!
 //! use hexing::*;
-//! 
-//! fn main() {
-//!     // Create hexagonal positions
-//!     let position = HexPosition::new(1, -2);
-//!     println!("Initial position: {:?}", position);
-//! 
-//!     // Convert to pixel coordinates
-//!     let pixel_coords = position.to_pixel_coordinates();
-//!     println!("Pixel coordinates: {:?}", pixel_coords);
-//! 
-//!     // Calculate the distance between two hexagonal positions
-//!     let other_position = HexPosition::new(-1, 1);
-//!     let distance = position.distance(other_position);
-//!     println!("Distance between {:?} and {:?}: {:?}", position, other_position, distance);
-//! 
-//!     // Iterate over a hexagonal ring
-//!     let radius = 2;
-//!     println!("Positions in the ring with radius {}:", radius);
-//!     for pos in position.ring(radius) {
-//!         println!("{:?}", pos);
-//!     }
-//! 
-//!     // Iterate over a hexagonal spiral
-//!     let spiral_radius = 2;
-//!     println!("Positions in the spiral with radius {}:", spiral_radius);
-//!     for pos in position.spiral(spiral_radius) {
-//!         println!("{:?}", pos);
-//!     }
-//! 
-//!     // Rotate the position by 120 degrees (2 times 60 degrees)
-//!     let rotated_position = position.rotation(2);
-//!     println!("Position after 120 degrees rotation: {:?}", rotated_position);
-//! 
-//!     // Reflect the position
-//!     let reflected_position = position.reflect();
-//!     println!("Position after reflection: {:?}", reflected_position);
+//!
+//! // Create hexagonal positions
+//! let position = HexPosition::new(1, -2);
+//! println!("Initial position: {:?}", position);
+//!
+//! // Convert to pixel coordinates
+//! let pixel_coords = position.to_pixel_coordinates();
+//! println!("Pixel coordinates: {:?}", pixel_coords);
+//!
+//! // Calculate the distance between two hexagonal positions
+//! let other_position = HexPosition::new(-1, 1);
+//! let distance = position.distance(other_position);
+//! println!("Distance between {:?} and {:?}: {:?}", position, other_position, distance);
+//!
+//! // Iterate over a hexagonal ring
+//! let radius = 2;
+//! println!("Positions in the ring with radius {}:", radius);
+//! for pos in position.ring(radius) {
+//!     println!("{:?}", pos);
 //! }
+//!
+//! // Iterate over a hexagonal spiral
+//! let spiral_radius = 2;
+//! println!("Positions in the spiral with radius {}:", spiral_radius);
+//! for pos in position.spiral(spiral_radius) {
+//!     println!("{:?}", pos);
+//! }
+//!
+//! // Rotate the position by 120 degrees (2 times 60 degrees)
+//! let rotated_position = position.rotation(2);
+//! println!("Position after 120 degrees rotation: {:?}", rotated_position);
+//!
+//! // Reflect the position
+//! let reflected_position = position.reflect();
+//! println!("Position after reflection: {:?}", reflected_position);
+//!
 //! ```
-//! 
 //!
 //! This example demonstrates basic usage of the `hexing` library, including creating hexagonal positions, converting to pixel coordinates, calculating distances, and iterating over hexagonal rings and spirals.
 
