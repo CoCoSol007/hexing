@@ -242,6 +242,19 @@ impl<T: Number> HexPosition<T> {
         Self(x, y)
     }
 
+    /// Returns the origin of the hexagonal grid.
+    /// Equivalent to `HexPosition::new(0, 0)`.
+    /// 
+    /// # Example
+    /// 
+    /// ```
+    /// use hexing::HexPosition;
+    /// 
+    /// let origin = HexPosition::ORIGIN;
+    /// assert_eq!(origin, HexPosition::new(0, 0));
+    /// ```
+    pub const ORIGIN: Self = Self(T::ZERO, T::ZERO);
+
     /// Converts the current [HexPosition] into a pixel coordinate.
     ///
     /// If you want to learn more about pixel coordinates conversion,
