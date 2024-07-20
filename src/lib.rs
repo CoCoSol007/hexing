@@ -244,12 +244,12 @@ impl<T: Number> HexPosition<T> {
 
     /// Returns the origin of the hexagonal grid.
     /// Equivalent to `HexPosition::new(0, 0)`.
-    /// 
+    ///
     /// # Example
-    /// 
+    ///
     /// ```
     /// use hexing::HexPosition;
-    /// 
+    ///
     /// let origin = HexPosition::ORIGIN;
     /// assert_eq!(origin, HexPosition::new(0, 0));
     /// ```
@@ -353,6 +353,42 @@ impl<T: Number> HexPosition<T> {
             radius,
             index: 0,
         }
+    }
+
+    /// Returns the rotation of the current [HexPosition] by 60 degrees n times.
+    /// Note that the rotation is counterclockwise.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use hexing::HexPosition;
+    ///
+    /// let position = HexPosition(-3, 1);
+    /// assert_eq!(position.rotation(2), HexPosition(2, -3));
+    /// ```
+    pub fn rotation(self, n: i32) -> Self {
+        if n == 0 {
+            self
+        } else {
+            let new_position = Self(-self.1, self.0 + self.1);
+            new_position.rotation(n - 1)
+        }
+    }
+
+    /// Returns the reflection of the current [HexPosition].
+    /// The reflection is the position with the same distance from the origin but in the opposite direction.
+    /// (like a central symmetry)
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use hexing::HexPosition;
+    ///
+    /// let position = HexPosition(1, 0);
+    /// assert_eq!(position.reflect(), HexPosition(-1, 0));
+    /// ```
+    pub fn reflect(self) -> Self {
+        Self::new(-self.0, -self.1)
     }
 }
 

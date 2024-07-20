@@ -29,6 +29,7 @@
 - **Hexagonal Coordinate Manipulation**: Represent and manipulate positions in a hexagonal grid using axial coordinates.
 - **Distance Calculations**: Compute the distance between two hexagonal positions.
 - **Pixel Coordinate Conversion**: Convert hexagonal positions to pixel coordinates for graphical use.
+- **Reflection and Rotation**: Apply reflection and rotation to hexagonal positions.
 - **Ring and Spiral Iterators**: Obtain positions in a ring or spiral around a central position.
 
 ### Number Trait
@@ -60,6 +61,20 @@ Represents a position in a hexagonal grid with coordinates `T`. Coordinates are 
 
   ```rust
   let distance = pos.distance(HexPosition::new(3, 4));
+  ```
+
+- **Rotation**:
+Will apply a rotation of 2 x 60 degrees around the origin.
+
+  ```rust
+  let rotated_pos = pos.rotation(2);
+  ```
+
+- **Reflection**:
+Will apply a central symmetric reflection around the origin.
+
+  ```rust
+  let reflected_pos = pos.reflect();
   ```
 
 - **Ring Iterators**:
