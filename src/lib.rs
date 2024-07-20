@@ -63,10 +63,14 @@
 //!
 //! This example demonstrates basic usage of the `hexing` library, including creating hexagonal positions, converting to pixel coordinates, calculating distances, and iterating over hexagonal rings and spirals.
 
+pub mod utils;
+use utils::axial_round;
+
 use std::ops::{
     Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
 };
 
+use lerp::Lerp;
 use paste::paste;
 
 /// Represents a number that can be used in calculations for hexagonal grids.
@@ -299,6 +303,52 @@ impl<T: Number> Iterator for HexSpiral<T> {
     }
 }
 
+/// A hexagonal line iterator.
+/// For more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
+pub struct HexLine<T: Number> {
+    /// The starting position of the line.
+    start: HexPosition<T>,
+
+    /// The ending position of the line.
+    end: HexPosition<T>,
+
+    /// The length of the line.
+    max_index: u32,
+
+    /// The index of the current position in the line.
+    current_index: u32,
+}
+
+impl<T: Number> Iterator for HexLine<T> {
+    type Item = HexPosition<T>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        // Check if the line is complete.
+        if self.current_index == self.max_index + 1 {
+            return None;
+        }
+
+        // Check if the line is empty.
+        if self.start == self.end {
+            self.current_index += 1;
+            return Some(self.start);
+        }
+
+        // Calculate the next position.
+        let t = self.current_index as f32 / self.max_index as f32;
+        let result = axial_round(HexPosition(
+            self.start.0.to_f32().lerp(self.end.0.to_f32(), t),
+            self.start.1.to_f32().lerp(self.end.1.to_f32(), t),
+        ));
+
+        self.current_index += 1;
+        Some(HexPosition(
+            T::from_f32(result.0 as f32),
+            T::from_f32(result.1 as f32),
+        ))
+    }
+}
+
 impl<T: Number> HexPosition<T> {
     /// Creates a new [HexPosition].
     pub const fn new(x: T, y: T) -> Self {
@@ -415,6 +465,35 @@ impl<T: Number> HexPosition<T> {
             current: self.ring(1),
             radius,
             index: 0,
+        }
+    }
+
+    /// Returns the line between two [HexPosition]s as a iterator.
+    /// For more information about how it's calculated, check the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing)
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use hexing::HexPosition;
+    ///
+    /// let a = HexPosition(0, 0);
+    /// let b = HexPosition(-2, -1);
+    ///
+    /// for pos in a.line_to(b) {
+    ///     println!("{:?}", pos);
+    /// }
+    ///
+    /// assert_eq!(a.line_to(b).count(), 4);
+    ///
+    /// let c = HexPosition(3, -2);
+    /// assert_eq!(c.line_to(c).count(), 1);
+    /// ```
+    pub fn line_to(self, other: Self) -> HexLine<T> {
+        HexLine {
+            start: self,
+            end: other,
+            max_index: self.distance(other).to_f32() as u32,
+            current_index: 0,
         }
     }
 

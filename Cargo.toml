@@ -30,4 +30,5 @@ unwrap_used = "warn"
 nursery = { level = "warn", priority = -1 }
 
 [dependencies]
+lerp = "0.5.0"
 paste = "1.0.15"

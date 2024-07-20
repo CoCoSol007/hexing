@@ -31,6 +31,7 @@
 - **Pixel Coordinate Conversion**: Convert hexagonal positions to pixel coordinates for graphical use.
 - **Reflection and Rotation**: Apply reflection and rotation to hexagonal positions.
 - **Ring and Spiral Iterators**: Obtain positions in a ring or spiral around a central position.
+- **Line Iterators**: Obtain positions along a line between two hexagonal positions.**
 
 ### Number Trait
 
@@ -90,6 +91,17 @@ Will apply a central symmetric reflection around the origin.
   ```rust
   for spiral_pos in pos.spiral(2) {
       println!("{:?}", spiral_pos);
+  }
+  ```
+
+- **Line Iterators**
+A iterator that returns positions along a line between two hexagonal positions.
+
+  ```rust
+  let a = HexPosition(0, 0);
+  let b = HexPosition(-2, -1);
+  for line_pos in a.line(b) {
+      println!("{:?}", line_pos);
   }
   ```
 
