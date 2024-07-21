@@ -70,7 +70,7 @@ use std::ops::{
     Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
 };
 
-use lerp::Lerp;
+use lerp::{num_traits::Float, Lerp};
 use paste::paste;
 
 /// Represents a number that can be used in calculations for hexagonal grids.
@@ -388,6 +388,30 @@ impl<T: Number> HexPosition<T> {
                 .mul_add(T::to_f32(self.0), 3f32.sqrt() / 2.0 * T::to_f32(self.1)),
             3.0 / 2.0 * T::to_f32(self.1),
         )
+    }
+
+    /// Converts a pixel coordinate into a [HexPosition].
+    /// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#pixel-to-hex).
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use hexing::HexPosition;
+    ///
+    /// for q in -10..10 {
+    ///     for r in -10..10 {
+    ///         let position = HexPosition::new(q, r);
+    ///         let new_position: HexPosition<i32> =
+    ///             HexPosition::from_pixel_coordinates(position.to_pixel_coordinates());
+    ///
+    ///         assert_eq!(position, new_position);
+    ///     }
+    /// }
+    pub fn from_pixel_coordinates((x, y): (f32, f32)) -> Self {
+        let q = (3.0.sqrt() / 3.0).mul_add(x, -(1.0 / 3.0 * y));
+        let r = 2.0 / 3.0 * y;
+        let result = axial_round(HexPosition(q, r));
+        Self(T::from_f32(result.0 as f32), T::from_f32(result.1 as f32))
     }
 
     /// Returns the distance between two [HexPosition]s.

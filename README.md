@@ -31,7 +31,7 @@
 - **Pixel Coordinate Conversion**: Convert hexagonal positions to pixel coordinates for graphical use.
 - **Reflection and Rotation**: Apply reflection and rotation to hexagonal positions.
 - **Ring and Spiral Iterators**: Obtain positions in a ring or spiral around a central position.
-- **Line Iterators**: Obtain positions along a line between two hexagonal positions.**
+- **Line Iterators**: Obtain positions along a line between two hexagonal positions.
 
 ### Number Trait
 
@@ -59,6 +59,7 @@ Converts the current [HexPosition] into a pixel coordinate. Basically, it conver
 
   ```rust
   let pixel_coords = pos.to_pixel_coordinates();
+  let pixel_coords2 = HexPosition::from_pixel_coordinates(pixel_coords);
   ```
 
 - **Distance Calculation**:
@@ -157,6 +158,11 @@ use hexing::HexPosition;
 let position = HexPosition::new(1, 0);
 let pixel_coords = position.to_pixel_coordinates();
 println!("Pixel coordinates: {:?}", pixel_coords);
+
+let new_position: HexPosition<i32> = HexPosition::from_pixel_coordinates(pixel_coords);
+println!("New position: {:?}", new_position);
+
+assert!(position == new_position);
 ```
 
 #### Calculating Distance Between Positions
