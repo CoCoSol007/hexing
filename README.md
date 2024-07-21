@@ -16,6 +16,8 @@
   <h3 align="center">Hexing</h3>
   <p align="center">
     <br />
+    <i>"Hexagons are the bestagons"</i>
+    <br />
     A basic Rust library to manipulate hexagonal grids.
   </p>
 </div>
