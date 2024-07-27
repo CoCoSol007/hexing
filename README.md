@@ -12,7 +12,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="logo.png" alt="Logo" width="300"></p>
+  <img src="https://github.com/CoCoSol007/hexing/blob/main/logo.png" alt="Logo" width="300"></p>
   <h3 align="center">Hexing</h3>
   <p align="center">
     <br />
