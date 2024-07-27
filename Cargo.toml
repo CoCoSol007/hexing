@@ -18,6 +18,7 @@ exclude = [
     ".github/*",
     "rustfmt.toml",
     ".gitignore",
+    "logo.png",
 ]
 
 [lints.rust]
