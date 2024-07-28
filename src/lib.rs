@@ -163,7 +163,6 @@ macro_rules! number_impl {
 
 number_impl! {
     i8, i16, i32, i64, i128, isize,
-    f32, f64,
 }
 
 /// Represents a position in a hexagonal grid.
@@ -336,7 +335,7 @@ impl<T: Number> Iterator for HexLine<T> {
 
         // Calculate the next position.
         let t = self.current_index as f32 / self.max_index as f32;
-        let result = axial_round(HexPosition(
+        let result = axial_round((
             self.start.0.to_f32().lerp(self.end.0.to_f32(), t),
             self.start.1.to_f32().lerp(self.end.1.to_f32(), t),
         ));
@@ -410,7 +409,7 @@ impl<T: Number> HexPosition<T> {
     pub fn from_pixel_coordinates((x, y): (f32, f32)) -> Self {
         let q = (3.0.sqrt() / 3.0).mul_add(x, -(1.0 / 3.0 * y));
         let r = 2.0 / 3.0 * y;
-        let result = axial_round(HexPosition(q, r));
+        let result = axial_round((q, r));
         Self(T::from_f32(result.0 as f32), T::from_f32(result.1 as f32))
     }
 

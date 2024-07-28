@@ -25,12 +25,12 @@ use super::*;
 /// ```
 /// use hexing::HexPosition;
 ///
-/// let position = HexPosition(0.75, 0.1);
+/// let position = (0.75, 0.1);
 /// let rounded = hexing::utils::axial_round(position);
 /// assert_eq!(rounded, HexPosition(1, 0));
 /// ```
-pub fn axial_round(pos: HexPosition<f32>) -> HexPosition<i32> {
-    let (q, r) = (pos.0, pos.1);
+pub fn axial_round(pos: (f32, f32)) -> HexPosition<i32> {
+    let (q, r) = pos;
     let s = -q - r;
 
     let (rq, rr, rs) = (q.round(), r.round(), s.round());
