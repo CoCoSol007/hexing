@@ -253,7 +253,7 @@ Add `hexing` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-hexing = "0.1.2"
+hexing = "0.1.3"
 ```
 
 <!-- You have to change every link to the great repo -->
