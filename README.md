@@ -12,7 +12,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="https://github.com/CoCoSol007/hexing/blob/main/logo.png" alt="Logo" width="300"></p>
+  <img src="https://raw.githubusercontent.com/CoCoSol007/hexing/main/logo.png" alt="Logo" width="300"></p>
   <h3 align="center">Hexing</h3>
   <p align="center">
     <br />
@@ -253,7 +253,7 @@ Add `hexing` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-hexing = "0.1.3"
+hexing = "0.2.0"
 ```
 
 <!-- You have to change every link to the great repo -->
