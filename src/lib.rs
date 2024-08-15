@@ -73,6 +73,9 @@ use std::ops::{
 use lerp::{num_traits::Float, Lerp};
 use paste::paste;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 /// Represents a number that can be used in calculations for hexagonal grids.
 pub trait Number:
     Copy
@@ -168,10 +171,12 @@ number_impl! {
 /// Represents a position in a hexagonal grid.
 /// We use the axial coordinate system explained in this
 /// [documentation](https://www.redblobgames.com/grids/hexagons/#coordinates).
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexPosition<T: Number>(pub T, pub T);
 
 /// All possible directions in a hexagonal grid.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum HexDirection {
     /// The direction right.
@@ -217,6 +222,8 @@ impl HexDirection {
 }
 
 /// A hexagonal ring iterator.
+/// This this the rust implementation of the [documentation](https://www.redblobgames.com/grids/hexagons/#rings).
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct HexRing<T: Number> {
     /// The current position in the ring.
     current: HexPosition<T>,
@@ -266,6 +273,8 @@ impl<T: Number> Iterator for HexRing<T> {
 }
 
 /// A hexagonal spiral iterator.
+/// This this the rust implementation of the [documentation](https://www.redblobgames.com/grids/hexagons/#rings) spiral.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct HexSpiral<T: Number> {
     /// The origin of the spiral.
     origin: HexPosition<T>,
@@ -304,6 +313,7 @@ impl<T: Number> Iterator for HexSpiral<T> {
 
 /// A hexagonal line iterator.
 /// For more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct HexLine<T: Number> {
     /// The starting position of the line.
     start: HexPosition<T>,

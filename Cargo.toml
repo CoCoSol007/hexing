@@ -28,6 +28,9 @@ exclude = [
     "logo.png",
 ]
 
+[features]
+serde = ["dep:serde"]
+
 [lints.rust]
 missing_docs = "warn"
 
@@ -40,3 +43,4 @@ nursery = { level = "warn", priority = -1 }
 [dependencies]
 lerp = "0.5.0"
 paste = "1.0.15"
+serde = {version = "1.0.207", optional = true, features = ["derive"]}
