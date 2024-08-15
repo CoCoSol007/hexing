@@ -19,7 +19,6 @@ categories = [
   "algorithms",
   "mathematics",
   "data-structures",
-  "hexagonal",
 ]
 exclude = [
     ".github/*",
