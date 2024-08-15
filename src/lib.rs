@@ -224,6 +224,7 @@ impl HexDirection {
 /// A hexagonal ring iterator.
 /// This this the rust implementation of the [documentation](https://www.redblobgames.com/grids/hexagons/#rings).
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexRing<T: Number> {
     /// The current position in the ring.
     current: HexPosition<T>,
@@ -275,6 +276,7 @@ impl<T: Number> Iterator for HexRing<T> {
 /// A hexagonal spiral iterator.
 /// This this the rust implementation of the [documentation](https://www.redblobgames.com/grids/hexagons/#rings) spiral.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexSpiral<T: Number> {
     /// The origin of the spiral.
     origin: HexPosition<T>,
@@ -314,6 +316,7 @@ impl<T: Number> Iterator for HexSpiral<T> {
 /// A hexagonal line iterator.
 /// For more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexLine<T: Number> {
     /// The starting position of the line.
     start: HexPosition<T>,
