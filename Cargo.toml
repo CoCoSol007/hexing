@@ -26,6 +26,7 @@ exclude = [
     "rustfmt.toml",
     ".gitignore",
     "logo.png",
+    "LICENSE",
 ]
 
 [features]
