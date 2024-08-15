@@ -26,7 +26,7 @@
 
 `hexing` is a Rust library designed for manipulation and calculations on hexagonal grids. It provides tools for working with hexagonal positions and directions, as well as iterators for exploring hexagonal rings and spirals.
 
-### Features
+## Features
 
 - **Hexagonal Coordinate Manipulation**: Represent and manipulate positions in a hexagonal grid using axial coordinates.
 - **Distance Calculations**: Compute the distance between two hexagonal positions.
@@ -134,11 +134,11 @@ You can convert a [HexDirection] to a [HexPosition] by using the `to_vector` met
   let vector = direction.to_vector();
   ```
 
-### Usage Examples
+## Usage Examples
 
 Here are some examples to illustrate the features of `hexing`.
 
-#### Creating Hexagonal Positions
+### Creating Hexagonal Positions
 
 ```rust
 use hexing::HexPosition;
@@ -152,7 +152,7 @@ println!("Position 2: {:?}", pos2);
 println!("Origin: {:?}", origin);
 ```
 
-#### Conversion to Pixel Coordinates
+### Conversion to Pixel Coordinates
 
 ```rust
 use hexing::HexPosition;
@@ -167,7 +167,7 @@ println!("New position: {:?}", new_position);
 assert!(position == new_position);
 ```
 
-#### Calculating Distance Between Positions
+### Calculating Distance Between Positions
 
 ```rust
 use hexing::HexPosition;
@@ -178,7 +178,7 @@ let dist = pos1.distance(pos2);
 println!("Distance: {:?}", dist);
 ```
 
-#### Iterating Over Rings and Spirals
+### Iterating Over Rings and Spirals
 
 ```rust
 use hexing::{HexPosition, HexRing, HexSpiral};
@@ -198,7 +198,7 @@ for pos in spiral {
 }
 ```
 
-#### Rotation of Hexagonal Position
+### Rotation of Hexagonal Position
 
 ```rust
 use hexing::HexPosition;
@@ -208,7 +208,7 @@ let rotated_pos = pos.rotation(rotation/60); // Rotates 120 degrees
 println!("Rotated Position: {:?}", rotated_pos);
 ```
 
-#### Reflection of Hexagonal Position
+### Reflection of Hexagonal Position
 
 ```rust
 use hexing::HexPosition;
@@ -218,7 +218,7 @@ let reflected_pos = pos.reflect();
 println!("Reflected Position: {:?}", reflected_pos);
 ```
 
-#### Line Iterator
+### Line Iterator
 
 ```rust
 use hexing::HexPosition;
@@ -230,7 +230,7 @@ for pos in start.line(end) {
 }
 ```
 
-#### Using HexDirection
+### Using HexDirection
 
 ```rust
 use hexing::HexDirection;
@@ -243,6 +243,141 @@ let new_position = HexPosition::new(0, 0) + vector * 3;
 println!("New Position after moving Right: {:?}", new_position);
 ```
 
+## Feature `serde`
+
+The `hexing` library allows for the serialization and deserialization of hexagonal data structures through the `serde` feature. This feature is enabled by the `serde` feature of the library.
+
+### Enabling the `serde` Feature
+
+Simply run the command `cargo add hexing --features=serde` in your project or manually add it to your `Cargo.toml`.
+
+```toml
+[dependencies]
+hexing = { version = "0.2.1", features = ["serde"] }
+```
+
+### Serialization and Deserialization with `serde`
+
+When the `serde` feature is enabled, the following data structures automatically implement the `Serialize` and `Deserialize` traits:
+
+- **HexPosition**
+- **HexDirection**
+- **HexRing**
+- **HexSpiral**
+- **HexLine**
+
+**Note**: To use all the examples below, you need to add the `serde_json` library to your `Cargo.toml`.
+
+#### HexPosition
+
+`HexPosition<T>` represents a position in a hexagonal grid. With the `serde` feature, this structure can be serialized and deserialized, making it easier to save and retrieve hexagonal positions in formats like JSON, BSON, etc.
+
+**Example: Serialization and Deserialization**
+
+```rust
+use hexing::HexPosition;
+
+fn main() {
+    let position = HexPosition::new(1, -2);
+
+    // Serialize to JSON
+    let serialized = serde_json::to_string(&position).unwrap();
+    println!("Serialized: {}", serialized);
+
+    // Deserialize from JSON
+    let deserialized: HexPosition<i32> = serde_json::from_str(&serialized).unwrap();
+    println!("Deserialized: {:?}", deserialized);
+}
+```
+
+#### HexDirection
+
+`HexDirection` is an enumeration representing all possible directions in a hexagonal grid. With the `serde` feature, this enumeration can be serialized and deserialized.
+
+**Example: Serialization and Deserialization**
+
+```rust
+use hexing::HexDirection;
+
+fn main() {
+    let direction = HexDirection::Right;
+
+    // Serialize to JSON
+    let serialized = serde_json::to_string(&direction).unwrap();
+    println!("Serialized: {}", serialized);
+
+    // Deserialize from JSON
+    let deserialized: HexDirection = serde_json::from_str(&serialized).unwrap();
+    println!("Deserialized: {:?}", deserialized);
+}
+```
+
+#### HexRing
+
+`HexRing<T>` is a structure that allows iteration over positions in a hexagonal ring. This structure can also be serialized and deserialized with the `serde` feature.
+
+**Example: Serialization and Deserialization**
+
+```rust
+use hexing::{HexPosition, HexRing};
+
+fn main() {
+    let ring = HexPosition::new(0, 0).ring(2);
+
+    // Serialize to JSON
+    let serialized = serde_json::to_string(&ring).unwrap();
+    println!("Serialized: {}", serialized);
+
+    // Deserialize from JSON
+    let deserialized: HexRing<i32> = serde_json::from_str(&serialized).unwrap();
+    println!("Deserialized: {:?}", deserialized);
+}
+```
+
+#### HexSpiral
+
+`HexSpiral<T>` allows iteration over positions in a hexagonal spiral. Like the other structures, `HexSpiral<T>` is serializable and deserializable with `serde`.
+
+**Example: Serialization and Deserialization**
+
+```rust
+use hexing::{HexPosition, HexSpiral};
+
+fn main() {
+    let spiral = HexPosition::new(0, 0).spiral(2);
+
+    // Serialize to JSON
+    let serialized = serde_json::to_string(&spiral).unwrap();
+    println!("Serialized: {}", serialized);
+
+    // Deserialize from JSON
+    let deserialized: HexSpiral<i32> = serde_json::from_str(&serialized).unwrap();
+    println!("Deserialized: {:?}", deserialized);
+}
+```
+
+#### HexLine
+
+`HexLine<T>` allows iteration over positions on a hexagonal line between two points. This structure is also serializable and deserializable.
+
+**Example: Serialization and Deserialization**
+
+```rust
+use hexing::{HexPosition, HexLine};
+
+fn main() {
+    let line = HexPosition::new(0, 0).line_to(HexPosition::new(2, -1));
+
+    // Serialize to JSON
+    let serialized = serde_json::to_string(&line).unwrap();
+    println!("Serialized: {}", serialized);
+
+    // Deserialize from JSON
+    let deserialized: HexLine<i32> = serde_json::from_str(&serialized).unwrap();
+    println!("Deserialized: {:?}", deserialized);
+}
+```
+
 ### Full Documentation
 
 For more detailed documentation and additional explanations about hexagonal grids, please refer to the [Red Blob Games hexagonal grid documentation](https://www.redblobgames.com/grids/hexagons/).
@@ -253,7 +388,7 @@ Add `hexing` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-hexing = "0.2.0"
+hexing = "0.2.1"
 ```
 
 <!-- You have to change every link to the great repo -->
