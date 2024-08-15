@@ -34,6 +34,8 @@
 - **Reflection and Rotation**: Apply reflection and rotation to hexagonal positions.
 - **Ring and Spiral Iterators**: Obtain positions in a ring or spiral around a central position.
 - **Line Iterators**: Obtain positions along a line between two hexagonal positions.
+- **Number Trait**: Allow generic calculations with various numeric types.
+- **Serialization and Deserialization**: Serialize and deserialize hexagonal positions and directions with the `serde` feature.
 
 ### Number Trait
 
