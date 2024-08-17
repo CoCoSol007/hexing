@@ -66,8 +66,10 @@
 pub mod utils;
 use utils::{axial_round, hexagonal_lerp};
 
-use std::ops::{
-    Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
+use std::{
+    fmt::Display,
+    hash::Hash,
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign},
 };
 
 use paste::paste;
