@@ -64,13 +64,12 @@
 //! This example demonstrates basic usage of the `hexing` library, including creating hexagonal positions, converting to pixel coordinates, calculating distances, and iterating over hexagonal rings and spirals.
 
 pub mod utils;
-use utils::axial_round;
+use utils::{axial_round, hexagonal_lerp};
 
 use std::ops::{
     Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
 };
 
-use lerp::{num_traits::Float, Lerp};
 use paste::paste;
 
 #[cfg(feature = "serde")]
@@ -348,10 +347,7 @@ impl<T: Number> Iterator for HexLine<T> {
 
         // Calculate the next position.
         let t = self.current_index as f32 / self.max_index as f32;
-        let result = axial_round((
-            self.start.0.to_f32().lerp(self.end.0.to_f32(), t),
-            self.start.1.to_f32().lerp(self.end.1.to_f32(), t),
-        ));
+        let result = axial_round(hexagonal_lerp(self.start, self.end, t));
 
         self.current_index += 1;
         Some(HexPosition(
@@ -420,7 +416,7 @@ impl<T: Number> HexPosition<T> {
     ///     }
     /// }
     pub fn from_pixel_coordinates((x, y): (f32, f32)) -> Self {
-        let q = (3.0.sqrt() / 3.0).mul_add(x, -(1.0 / 3.0 * y));
+        let q = (3.0_f32.sqrt() / 3.0).mul_add(x, -(1.0 / 3.0 * y));
         let r = 2.0 / 3.0 * y;
         let result = axial_round((q, r));
         Self(T::from_f32(result.0 as f32), T::from_f32(result.1 as f32))

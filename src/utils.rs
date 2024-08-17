@@ -44,3 +44,39 @@ pub fn axial_round(pos: (f32, f32)) -> HexPosition<i32> {
         HexPosition(rq as i32, rr as i32)
     }
 }
+
+/// An utility function for lerp between two hexagonal positions.
+/// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
+/// 
+/// # Example
+/// 
+/// ```
+/// use hexing::HexPosition;
+/// 
+/// let position = HexPosition(0, 0);
+/// let other_position = HexPosition(-4, 2);
+/// let lerp = hexing::utils::hexagonal_lerp(position, other_position, 0.5);
+/// assert_eq!(lerp, (-2.0, 1.0));
+/// ```
+pub fn hexagonal_lerp<T: Number>(a: HexPosition<T>, b: HexPosition<T>, t: f32) -> (f32, f32) {
+    let a = (a.0.to_f32(), a.1.to_f32());
+    let b = (b.0.to_f32(), b.1.to_f32());
+
+    (lerp(a.0, b.0, t), lerp(a.1, b.1, t))
+}
+
+/// An utility function for linear interpolation.
+/// for more information, see the [documentation](https://en.wikipedia.org/wiki/Linear_interpolation).
+/// 
+/// # Example
+/// 
+/// ```
+/// let a = 1.0;
+/// let b = 2.0;
+/// let t = 0.5;
+/// let lerp = hexing::utils::lerp(a, b, t);
+/// assert_eq!(lerp, 1.5);
+/// ```
+pub fn lerp(a: f32, b: f32, t: f32) -> f32 {
+    a.mul_add(1.0 - t, b * t)
+}
