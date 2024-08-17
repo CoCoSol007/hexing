@@ -601,6 +601,12 @@ macro_rules! impl_ops {
     )*}};
 }
 
+impl<T: Number> Display for HexPosition<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({:?}, {:?})", self.0, self.1)
+    }
+}
+
 impl_ops! {
     (Add, add),
     (Sub, sub),
