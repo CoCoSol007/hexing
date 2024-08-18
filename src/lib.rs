@@ -68,7 +68,7 @@ use utils::{axial_round, hexagonal_lerp};
 
 use std::{
     fmt::Display,
-    hash::Hash,
+    hash::{self, Hash},
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign},
 };
 
@@ -81,6 +81,8 @@ use serde::{Deserialize, Serialize};
 pub trait Number:
     Copy
     + PartialEq
+    + hash::Hash
+    + Eq
     + PartialOrd
     + Add<Output = Self>
     + Sub<Output = Self>
@@ -134,6 +136,9 @@ pub trait Number:
     /// Converts an `usize` to `Self`.
     fn from_usize(value: usize) -> Self;
 
+    /// Converts an `isize` to `Self`.
+    fn from_isize(value: isize) -> Self;
+
     /// Converts `self` to an `f32`.
     fn to_f32(self) -> f32;
 
@@ -151,6 +156,10 @@ macro_rules! number_impl {
 
 
             fn from_usize(value: usize) -> Self {
+                value as $t
+            }
+
+            fn from_isize(value: isize) -> Self {
                 value as $t
             }
 
@@ -219,6 +228,28 @@ impl HexDirection {
             Self::DownLeft => HexPosition(T::MINUS_ONE, T::ONE),
             Self::DownRight => HexPosition(T::ZERO, T::ONE),
         }
+    }
+
+    ///  Returns a iterator of all directions.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use hexing::HexDirection;
+    ///
+    /// let directions = HexDirection::iter();
+    ///
+    /// assert_eq!(directions.len(), 6);
+    /// ```
+    pub const fn iter() -> [Self; 6] {
+        [
+            Self::Right,
+            Self::UpRight,
+            Self::UpLeft,
+            Self::Left,
+            Self::DownLeft,
+            Self::DownRight,
+        ]
     }
 }
 
