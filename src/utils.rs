@@ -80,3 +80,46 @@ pub fn hexagonal_lerp<T: Number>(a: HexPosition<T>, b: HexPosition<T>, t: f32) -
 pub fn lerp(a: f32, b: f32, t: f32) -> f32 {
     a.mul_add(1.0 - t, b * t)
 }
+
+/// An utility function for clamp.
+/// for more information, see the [documentation](https://en.wikipedia.org/wiki/Clamping_(computing)).
+///
+/// # Example
+///
+/// ```
+/// let value = 5;
+/// let min = 0;
+/// let max = 10;
+/// let clamp = hexing::utils::clamp(value, min, max);
+/// assert_eq!(clamp, 5);
+/// ```
+pub fn clamp<T: Number>(value: T, min: T, max: T) -> T {
+    if value < min {
+        min
+    } else if value > max {
+        max
+    } else {
+        value
+    }
+}
+
+/// An utility function for getting the neighbors of a hexagonal position.
+/// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#neighbors).
+///
+/// # Example
+///
+/// ```
+/// use hexing::HexPosition;
+///
+/// let position = HexPosition(0, 0);
+/// let neighbors = hexing::utils::neighbors(position);
+/// assert_eq!(neighbors.len(), 6);
+/// ```
+pub fn neighbors<T: Number>(pos: HexPosition<T>) -> Vec<HexPosition<T>> {
+    let mut neighbors = Vec::with_capacity(6);
+    for direction in HexDirection::iter() {
+        let neighbor = pos + direction.to_vector();
+        neighbors.push(neighbor);
+    }
+    neighbors
+}
