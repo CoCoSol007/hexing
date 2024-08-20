@@ -69,10 +69,7 @@
 //! // Example coming soon...
 //! ```
 
-use std::{
-    collections::{HashMap, HashSet},
-    usize,
-};
+use std::collections::{HashMap, HashSet};
 
 #[cfg(feature = "noise")]
 use noise::NoiseFn;
