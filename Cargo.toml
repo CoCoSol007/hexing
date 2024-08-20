@@ -7,7 +7,6 @@ repository = "https://github.com/CoCoSol007/hexing"
 authors = ["CoCoSol"]
 license = "GPL-3.0"
 readme = "README.md"
-documentation  = "https://cocosol.fr/blog/hexing"
 keywords = [
   "bestagon",
   "hexagon",
