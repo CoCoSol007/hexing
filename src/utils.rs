@@ -123,3 +123,106 @@ pub fn neighbors<T: Number>(pos: HexPosition<T>) -> Vec<HexPosition<T>> {
     }
     neighbors
 }
+
+/// The `HexBound` struct defines a hexagonal area centered around a specific hexagonal position.
+/// This struct encapsulates a central position (`HexPosition<T>`) and a radius (`usize`).
+/// It allows checking whether a given position is within this hexagonal area.
+///
+/// Note that this feature is inspired by the [hexx](https://github.com/ManevilleF/hexx?tab=readme-ov-file#wrapping) project,
+/// which provides similar tools for working with hexagonal grids in Rust.
+///
+/// # Type Parameters
+/// - `T`: A type that implements the `Number` trait. This type is used for the hexagonal coordinates in the `HexPosition` struct.
+///
+/// # Example
+/// ```
+/// use hexing::{utils::HexBound, HexPosition};
+///
+/// let center = HexPosition::new(0, 0);
+/// let bound = HexBound::new(center, 2);
+/// let pos = HexPosition::new(1, -1);
+/// assert!(bound.contains(pos));
+/// ```
+pub struct HexBound<T: Number>(HexPosition<T>, usize);
+
+impl<T: Number> HexBound<T> {
+    /// Creates a new hexagonal area with a given center and radius.
+    ///
+    /// # Arguments
+    /// - `center`: The central position of the hexagonal area.
+    /// - `radius`: The radius of the hexagonal area.
+    ///
+    /// # Returns
+    /// Returns a new instance of `HexBound`.
+    ///
+    /// # Example
+    /// ```
+    /// use hexing::{utils::HexBound, HexPosition};
+    ///
+    /// let center = HexPosition::new(0, 0);
+    /// let bound = HexBound::new(center, 2);
+    /// ```
+    pub const fn new(center: HexPosition<T>, radius: usize) -> Self {
+        Self(center, radius)
+    }
+
+    /// Returns the radius of the hexagonal area.
+    ///
+    /// # Returns
+    /// Returns a `usize` representing the radius of the area.
+    ///
+    /// # Example
+    /// ```
+    /// use hexing::{utils::HexBound, HexPosition};
+    ///
+    /// let bound = HexBound::new(HexPosition::new(0, 0), 2);
+    /// assert_eq!(bound.radius(), 2);
+    /// ```
+    pub const fn radius(&self) -> usize {
+        self.1
+    }
+
+    /// Returns the central position of the hexagonal area.
+    ///
+    /// # Returns
+    /// Returns a `HexPosition<T>` representing the central position of the area.
+    ///
+    /// # Example
+    /// ```
+    /// use hexing::{utils::HexBound, HexPosition};
+    ///
+    /// let center = HexPosition::new(0, 0);
+    /// let bound = HexBound::new(center, 2);
+    /// assert_eq!(bound.center(), center);
+    /// ```
+    pub const fn center(&self) -> HexPosition<T> {
+        self.0
+    }
+
+    /// Checks if a given position is within the defined hexagonal area.
+    ///
+    /// # Arguments
+    /// - `pos`: The hexagonal position to check.
+    ///
+    /// # Returns
+    /// Returns `true` if the position is within the hexagonal area, `false` otherwise.
+    ///
+    /// # Example
+    /// ```
+    /// use hexing::{utils::HexBound, HexPosition};
+    ///
+    /// let center = HexPosition::new(0, 0);
+    /// let bound = HexBound::new(center, 2);
+    /// let pos = HexPosition::new(1, -1);
+    /// assert!(bound.contains(pos));
+    ///
+    /// let pos_outside = HexPosition::new(3, -3);
+    /// assert!(!bound.contains(pos_outside));
+    /// ```
+    pub fn contains(&self, pos: HexPosition<T>) -> bool {
+        if self.0.distance(pos).to_isize() > self.1 as isize {
+            return false;
+        }
+        true
+    }
+}
