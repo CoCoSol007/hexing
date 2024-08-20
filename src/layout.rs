@@ -588,7 +588,7 @@ impl<S: Number> HexLayout<bool, S> {
     /// Calculates the positions visible from a given position on a hexagonal map.
     ///
     /// This function returns a set of positions that are visible from the `center` position.
-    /// Visibility is determined based on distance and obstacles. Obstacles are defined as positions 
+    /// Visibility is determined based on distance and obstacles. Obstacles are defined as positions
     /// with an associated value of `true`.
     ///
     /// # Parameters
