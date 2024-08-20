@@ -8,7 +8,7 @@ Simply run the command `cargo add hexing --features=serde` in your project or ma
 
 ```toml
 [dependencies]
-hexing = { version = "0.3.0", features = ["serde"] }
+hexing = { version = "0.3.1", features = ["serde"] }
 ```
 
 ## Serialization and Deserialization with `serde`
