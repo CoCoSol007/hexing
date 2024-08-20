@@ -34,8 +34,8 @@
 //!
 //! assert!(map.is_empty());
 //!
-//! // Create data using the create function
-//! map.create(HexPosition(1, 0), 10);
+//! // Create data using the set function
+//! map.set(HexPosition(1, 0), 10);
 //!
 //! assert_eq!(map.get(HexPosition(1, 0)), Some(&10));
 //! ```
@@ -106,8 +106,8 @@ use crate::*;
 /// // Modify the data using the set function
 /// map.set(HexPosition(0, 0), 10.0);
 ///
-/// // Create data using the create function
-/// map.create(HexPosition(1, 0), 10.0);
+/// // Create data using the set function
+/// map.set(HexPosition(1, 0), 10.0);
 ///
 /// assert_eq!(map.get(HexPosition(1, 0)), Some(&10.0));
 /// ```
@@ -173,7 +173,7 @@ impl<T: Number> HexLayout<f64, T> {
     ///     .set_lacunarity(0.4)
     ///     .set_persistence(0.5);
     ///
-    /// let mut map = HexLayout::new_from_range(1, HexPosition(0, 0));
+    /// let mut map = HexLayout::new_from_range(10, HexPosition(0, 0));
     /// map.init_noise(fbm);
     ///
     /// for pos in map.positions() {
@@ -186,9 +186,7 @@ impl<T: Number> HexLayout<f64, T> {
         for pos in keys {
             let position = pos.to_pixel_coordinates();
             let noise_value = noise.get([position.0 as f64, position.1 as f64]);
-            if self.set(pos, noise_value).is_err() {
-                unreachable!("Position not found");
-            }
+            self.set(pos, noise_value);
         }
     }
 }
@@ -235,36 +233,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// assert_eq!(map.get_mut(HexPosition(0, 0)), Some(f64::default()).as_mut());
     /// assert_eq!(map.get_mut(HexPosition(0, 1)), None);
     /// ```
-    pub fn set(&mut self, pos: HexPosition<S>, data: T) -> Result<(), String> {
-        self.get_mut(pos).map_or_else(
-            || {
-                Err(format!(
-                    "Position not found: {:?}, use the create function instead",
-                    pos
-                ))
-            },
-            |p| {
-                *p = data;
-                Ok(())
-            },
-        )
-    }
-
-    /// Creates a new data entry at the given position. If the position already contains data, it will be overwritten.
-    ///
-    /// ## Examples
-    ///
-    /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
-    ///
-    /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
-    /// assert_eq!(map.get_mut(HexPosition(0, 1)), None);
-    ///
-    /// map.create(HexPosition(0, 1), 10.0);
-    /// assert_eq!(map.get(HexPosition(0, 1)), Some(&10.0));
-    /// ```
-    pub fn create(&mut self, pos: HexPosition<S>, data: T) {
-        self.0.insert(pos, data);
+    pub fn set(&mut self, pos: HexPosition<S>, data: T) -> Option<T> {
+        self.0.insert(pos, data)
     }
 
     /// Deletes the data at the given position if it exists. Returns the data if it existed, otherwise returns `None`.
@@ -510,10 +480,10 @@ impl<S: Number> HexLayout<bool, S> {
     ///
     /// let mut map: HexLayout<bool, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     ///
-    /// let _ = map.set(HexPosition(-1, 1), true);
-    /// let _ = map.set(HexPosition(1, -1), true);
-    /// let _ = map.set(HexPosition(1, 0), true);
-    /// let _ = map.set(HexPosition(0, 1), true);
+    /// map.set(HexPosition(-1, 1), true);
+    /// map.set(HexPosition(1, -1), true);
+    /// map.set(HexPosition(1, 0), true);
+    /// map.set(HexPosition(0, 1), true);
     ///
     /// let start = HexPosition(0, 0);
     /// let goal = HexPosition(0, 2);
@@ -609,11 +579,11 @@ impl<S: Number> HexLayout<bool, S> {
     ///
     /// let start_pos = HexPosition::new(0, 0);
     ///
-    /// let _ = map.set(HexPosition(0, 1), true);
-    /// let _ = map.set(HexPosition(1, 0), true);
-    /// let _ = map.set(HexPosition(-2, 0), true);
-    /// let _ = map.set(HexPosition(-2, 1), true);
-    /// let _ = map.set(HexPosition(0, -2), true);
+    /// map.set(HexPosition(0, 1), true);
+    /// map.set(HexPosition(1, 0), true);
+    /// map.set(HexPosition(-2, 0), true);
+    /// map.set(HexPosition(-2, 1), true);
+    /// map.set(HexPosition(0, -2), true);
     ///
     /// let reachable_positions = map.field_of_view(start_pos, None);
     ///
@@ -621,11 +591,11 @@ impl<S: Number> HexLayout<bool, S> {
     /// let reachable_positions_with_range = map.field_of_view(start_pos, Some(range));
     ///
     /// for pos in reachable_positions {
-    ///    println!("{},", pos);
+    ///    println!("{}", pos);
     /// }
     ///
     /// for pos in reachable_positions_with_range {
-    ///     println!("{},", pos);
+    ///     println!("{}", pos);
     /// }
     /// ```
     pub fn field_of_view(

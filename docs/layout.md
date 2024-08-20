@@ -31,11 +31,12 @@ map.get(HexPosition(0, 0));
 map.set(HexPosition(0, 0), 10.0);
 
 // Create new data
-map.create(HexPosition(1, 0), 10.0);
+map.set(HexPosition(1, 0), 10.0);
 assert_eq!(map.get(HexPosition(1, 0)), Some(&10.0));
 
 // Delete data
 map.delete(HexPosition(0, 0));
+map.delete(HexPosition(1, 0));
 assert!(map.is_empty());
 ```
 
@@ -60,11 +61,11 @@ let mut map = HexLayout::new_from_range(6, HexPosition(0, 0));
     
 let start_pos = HexPosition::new(0, 0);
     
-let _ = map.set(HexPosition(0, 1), true);
-let _ = map.set(HexPosition(1, 0), true);
-let _ = map.set(HexPosition(-2, 0), true);
-let _ = map.set(HexPosition(-2, 1), true);
-let _ = map.set(HexPosition(0, -2), true);
+map.set(HexPosition(0, 1), true);
+map.set(HexPosition(1, 0), true);
+map.set(HexPosition(-2, 0), true);
+map.set(HexPosition(-2, 1), true);
+map.set(HexPosition(0, -2), true);
     
 let reachable_positions = map.field_of_view(start_pos, None);
     
@@ -72,11 +73,11 @@ let range = 2;
 let reachable_positions_with_range = map.field_of_view(start_pos, Some(range));
     
 for pos in reachable_positions {
-   println!("{},", pos);
+   println!("{}" pos);
 }
     
 for pos in reachable_positions_with_range {
-    println!("{},", pos);
+    println!("{}" pos);
 }
 ```
 
@@ -124,10 +125,10 @@ use hexing::{layout::HexLayout, HexPosition};
 
 let mut map: HexLayout<bool, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
 
-let _ = map.set(HexPosition(-1, 1), true);
-let _ = map.set(HexPosition(1, -1), true);
-let _ = map.set(HexPosition(1, 0), true);
-let _ = map.set(HexPosition(0, 1), true);
+map.set(HexPosition(-1, 1), true);
+map.set(HexPosition(1, -1), true);
+map.set(HexPosition(1, 0), true);
+map.set(HexPosition(0, 1), true);
 
 let start = HexPosition(0, 0);
 let goal = HexPosition(0, 2);
