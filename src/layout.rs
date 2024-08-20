@@ -64,9 +64,50 @@
 //! Ensure to enable the `noise` feature to run this example.
 //!
 //! Field of view, pathfinding, and movement fields:
+//!//! ```rust
+//! use hexing::HexPosition;
+//! use hexing::layout::HexLayout;
+//! 
+//! let mut map: HexLayout<bool, isize> = HexLayout::new_from_range(5, HexPosition(0, 0));
 //!
-//! ```rust
-//! // Example coming soon...
+//! // Example of Field of View
+//! map.set(HexPosition(0, 1), true);
+//! map.set(HexPosition(1, 0), true);
+//! map.set(HexPosition(0, -2), true);
+//! 
+//! let start_pos = HexPosition(0, 0);
+//! let visible_positions = map.field_of_view(start_pos, None);
+//! 
+//! println!("Visible positions without range limit:");
+//! for pos in &visible_positions {
+//!     println!("{:?}", pos);
+//! }
+//! 
+//! let visible_positions_with_range = map.field_of_view(start_pos, Some(2));
+//! 
+//! println!("Visible positions with a range of 2:");
+//! for pos in &visible_positions_with_range {
+//!     println!("{:?}", pos);
+//! }
+//! 
+//! // Example of Pathfinding
+//! let start = HexPosition(0, 0);
+//! let goal = HexPosition(2, 2);
+//! 
+//! let path = map.pathfinding(start, goal);
+//! 
+//! println!("Path from start to goal:");
+//! for pos in &path {
+//!     println!("{:?}", pos);
+//! }
+//! 
+//! // Example of Movement Fields
+//! let reachable_positions = map.field_of_move(start, 2);
+//! 
+//! println!("Positions reachable within a range of 2:");
+//! for pos in &reachable_positions {
+//!     println!("{:?}", pos);
+//! }
 //! ```
 
 use std::collections::{HashMap, HashSet};
