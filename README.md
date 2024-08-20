@@ -33,6 +33,7 @@
 - **Pixel Coordinate Conversion**: Convert hexagonal positions to pixel coordinates for graphical use.
 - **Reflection and Rotation**: Apply reflection and rotation to hexagonal positions.
 - **Ring and Spiral Iterators**: Obtain positions in a ring or spiral around a central position.
+- **Bounding**: Calculate if a point is within a hexagonal bounding box.
 - **Line Iterators**: Obtain positions along a line between two hexagonal positions.
 - **Number Trait**: Allow generic calculations with various numeric types.
 - **Serialization and Deserialization**: Serialize and deserialize hexagonal positions and directions with the `serde` feature.
@@ -121,6 +122,22 @@ A iterator that returns positions along a line between two hexagonal positions.
   for line_pos in a.line(b) {
       println!("{:?}", line_pos);
   }
+  ```
+
+- **Bounding**:
+A utility function that calculates the bounding box of a hexagonal grid.
+
+  ```rust
+  use hexing::{utils::HexBound, HexPosition};
+
+  let center = HexPosition(0, 0);
+  let radius = 3;
+
+  let bounding_box = HexBound::new(center, radius);
+
+  assert!(bounding_box.contains(HexPosition(0, 0)));
+  assert_eq!(bounding_box.radius(), 3);
+  assert_eq!(bounding_box.center(), HexPosition(0, 0));
   ```
 
 #### `HexDirection`
