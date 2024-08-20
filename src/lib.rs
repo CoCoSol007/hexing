@@ -63,6 +63,7 @@
 //!
 //! This example demonstrates basic usage of the `hexing` library, including creating hexagonal positions, converting to pixel coordinates, calculating distances, and iterating over hexagonal rings and spirals.
 
+pub mod layout;
 pub mod utils;
 use utils::{axial_round, hexagonal_lerp};
 
@@ -139,6 +140,9 @@ pub trait Number:
     /// Converts an `isize` to `Self`.
     fn from_isize(value: isize) -> Self;
 
+    /// Converts `self` to an `isize`.
+    fn to_isize(self) -> isize;
+
     /// Converts `self` to an `f32`.
     fn to_f32(self) -> f32;
 
@@ -161,6 +165,10 @@ macro_rules! number_impl {
 
             fn from_isize(value: isize) -> Self {
                 value as $t
+            }
+
+            fn to_isize(self) -> isize {
+                self as isize
             }
 
             fn to_f32(self) -> f32 {
