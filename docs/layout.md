@@ -159,7 +159,7 @@ or manually add it to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-hexing = { version = "0.2.1", features = ["noise"] }
+hexing = { version = "0.3.0", features = ["noise"] }
 noise = "0.8.1"
 ```
 
