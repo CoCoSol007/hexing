@@ -31,7 +31,8 @@ map.get(HexPosition(0, 0));
 map.set(HexPosition(0, 0), 10.0);
 
 // Create new data
-map.set(HexPosition(1, 0), 10.0);
+map.set(HexPosition(1, 0), 10.0)
+
 assert_eq!(map.get(HexPosition(1, 0)), Some(&10.0));
 
 // Delete data
@@ -66,6 +67,7 @@ map.set(HexPosition(1, 0), true);
 map.set(HexPosition(-2, 0), true);
 map.set(HexPosition(-2, 1), true);
 map.set(HexPosition(0, -2), true);
+
     
 let reachable_positions = map.field_of_view(start_pos, None);
     
