@@ -22,6 +22,7 @@ categories = [
 ]
 exclude = [
     ".github/*",
+    ".docs/*",
     "rustfmt.toml",
     ".gitignore",
     "logo.png",

@@ -506,7 +506,7 @@ impl<S: Number> HexLayout<bool, S> {
     /// # Example
     ///
     /// ```rust
-    /// # use hexing::{HexPosition, layout::HexLayout};
+    /// use hexing::{HexPosition, layout::HexLayout};
     ///
     /// let mut map: HexLayout<bool, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     ///
