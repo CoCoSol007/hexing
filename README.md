@@ -42,8 +42,7 @@
 - **Field of movements**: Calculate the movement field of a hexagonal grid.
 - **Noise generation**: Generate noise maps for hexagonal grids using the `noise` crate.
 
-> [!NOTE]
-> The Serde feature documentation is located in the [docs/serde.md](https://github.com/CoCoSol007/hexing/blob/main/docs/serde.md) file. And documentation for the pathfinding, field of view, field of movement and noise generation features are located in the [docs/layout.md](https://github.com/CoCoSol007/hexing/blob/main/docs/layout.md) file.
+**The Serde feature documentation is located in the [docs/serde.md](https://github.com/CoCoSol007/hexing/blob/main/docs/serde.md) file. And documentation for the pathfinding, field of view, field of movement and noise generation features are located in the [docs/layout.md](https://github.com/CoCoSol007/hexing/blob/main/docs/layout.md) file.**
 
 ### Number Trait
 
@@ -279,7 +278,7 @@ Add `hexing` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-hexing = "0.3.1"
+hexing = "0.3.3"
 ```
 
 <!-- You have to change every link to the great repo -->
