@@ -125,6 +125,7 @@ pub fn neighbors<T: Number>(pos: HexPosition<T>) -> Vec<HexPosition<T>> {
 }
 
 /// The `HexBound` struct defines a hexagonal area centered around a specific hexagonal position.
+///
 /// This struct encapsulates a central position (`HexPosition<T>`) and a radius (`usize`).
 /// It allows checking whether a given position is within this hexagonal area.
 ///
