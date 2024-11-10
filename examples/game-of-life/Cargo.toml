@@ -1,0 +1,8 @@
+[package]
+name = "game-of-life"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hexing = "0.3.3"
+rand = "0.8.5"
