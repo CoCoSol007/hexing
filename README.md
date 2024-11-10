@@ -26,6 +26,7 @@
 
 `hexing` is a Rust library designed for manipulation and calculations on hexagonal grids. It provides tools for working with hexagonal positions and directions, as well as iterators for exploring hexagonal rings and spirals.
 
+Some examples can be found in this [folder](https://github.com/CoCoSol007/hexing/blob/main/examples).
 ## Features
 
 - **Hexagonal Coordinate Manipulation**: Represent and manipulate positions in a hexagonal grid using axial coordinates.
