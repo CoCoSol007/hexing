@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Update
+      run: cargo update nightly
     - name: Build
       run: cargo build --verbose
     - name: Run tests
