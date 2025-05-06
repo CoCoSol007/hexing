@@ -1,13 +1,18 @@
-//! This module contains the layout logic for creating and managing hexagonal grids.
+//! This module contains the layout logic for creating and managing hexagonal
+//! grids.
 //!
-//! The layout is a simple `HashMap` structure that facilitates the creation and manipulation of hexagonal grids.
+//! The layout is a simple `HashMap` structure that facilitates the creation and
+//! manipulation of hexagonal grids.
 //!
-//! - `[D]` represents the data stored at each position in the grid. It must implement the `Default` trait to be initialized when creating a new, empty `HexLayout`.
+//! - `[D]` represents the data stored at each position in the grid. It must
+//!   implement the `Default` trait to be initialized when creating a new, empty
+//!   `HexLayout`.
 //! - `[T]` denotes the type of the coordinates in the grid.
 //!
 //! ## Why use a `HexLayout`?
 //!
-//! `HexLayout` is designed to implement useful features on hexagonal grids, including:
+//! `HexLayout` is designed to implement useful features on hexagonal grids,
+//! including:
 //! - Field of view
 //! - Pathfinding
 //! - Movement fields
@@ -18,7 +23,8 @@
 //! Basic usage:
 //!
 //! ```rust
-//! use hexing::{layout::HexLayout, HexPosition};
+//! use hexing::HexPosition;
+//! use hexing::layout::HexLayout;
 //!
 //! let mut map: HexLayout<i32, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
 //! assert_eq!(map.len(), 1);
@@ -42,11 +48,13 @@
 //!
 //! ## Using Noise (Requires the `noise` feature)
 //!
-//! If you have enabled the `noise` feature, you can use noise functions as follows:
+//! If you have enabled the `noise` feature, you can use noise functions as
+//! follows:
 //!
 //! ```rust
-//! use hexing::{layout::HexLayout, HexPosition};
-//! use noise::{Fbm, Perlin, MultiFractal};
+//! use hexing::HexPosition;
+//! use hexing::layout::HexLayout;
+//! use noise::{Fbm, MultiFractal, Perlin};
 //!
 //! let fbm = Fbm::<Perlin>::new(12345)
 //!     .set_octaves(2)
@@ -114,20 +122,23 @@ use std::collections::{HashMap, HashSet};
 
 #[cfg(feature = "noise")]
 use noise::NoiseFn;
-
 use priority_queue::PriorityQueue;
 use utils::neighbors;
 
 use crate::*;
 
-/// A layout structure represented by a `HashMap`, allowing for the creation and manipulation of hexagonal grids.
+/// A layout structure represented by a `HashMap`, allowing for the creation and
+/// manipulation of hexagonal grids.
 ///
-/// - `[D]` represents the data stored at each position in the grid. It must implement the `Default` trait to be initialized when creating a new, empty `HexLayout`.
+/// - `[D]` represents the data stored at each position in the grid. It must
+///   implement the `Default` trait to be initialized when creating a new, empty
+///   `HexLayout`.
 /// - `[T]` denotes the type of the coordinates in the grid.
 ///
 /// ## Why use a `HexLayout`?
 ///
-/// `HexLayout` is designed to implement useful features on hexagonal grids, including:
+/// `HexLayout` is designed to implement useful features on hexagonal grids,
+/// including:
 /// - Field of view
 /// - Pathfinding
 /// - Movement fields
@@ -136,7 +147,8 @@ use crate::*;
 /// ## Examples
 ///
 /// ```rust
-/// use hexing::{layout::HexLayout, HexPosition};
+/// use hexing::HexPosition;
+/// use hexing::layout::HexLayout;
 ///
 /// let mut map = HexLayout::new_from_range(1, HexPosition(0, 0));
 /// assert_eq!(map.len(), 1);
@@ -155,9 +167,12 @@ use crate::*;
 ///
 /// ## Usage in a Video Game
 ///
-/// In a video game, hexagonal grids can be managed using the `HexLayout` structure. This allows for different data to be recorded independently.
-/// For example, a `blocked_layout` structure where `T` is a `bool` can be used to record blocked positions in the grid, enabling pathfinding, field of view, and movement field calculations.
-/// Another layer can be used to track the number of resources available at each hexagonal position, etc.
+/// In a video game, hexagonal grids can be managed using the `HexLayout`
+/// structure. This allows for different data to be recorded independently.
+/// For example, a `blocked_layout` structure where `T` is a `bool` can be used
+/// to record blocked positions in the grid, enabling pathfinding, field of
+/// view, and movement field calculations. Another layer can be used to track
+/// the number of resources available at each hexagonal position, etc.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct HexLayout<D: Default, T: Number>(HashMap<HexPosition<T>, D>);
 
@@ -169,7 +184,8 @@ impl<T: Default> HexLayout<T, isize> {
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     /// assert_eq!(map.len(), 1);
@@ -198,14 +214,17 @@ impl<T: Default> HexLayout<T, isize> {
 impl<T: Number> HexLayout<f64, T> {
     /// Initializes a noise map for the layout.
     ///
-    /// The data type `[D]` must be a `f64` and the noise function `[NoiseFn]` must be of dimension 2.
+    /// The data type `[D]` must be a `f64` and the noise function `[NoiseFn]`
+    /// must be of dimension 2.
     ///
-    /// Note: You must include the `noise` crate in your project to use this function.
+    /// Note: You must include the `noise` crate in your project to use this
+    /// function.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     /// use noise::{Fbm, MultiFractal, Perlin};
     ///
     /// let fbm = Fbm::<Perlin>::new(12345)
@@ -233,12 +252,14 @@ impl<T: Number> HexLayout<f64, T> {
 }
 
 impl<T: Default, S: Number> HexLayout<T, S> {
-    /// Returns a reference to the data associated with the given position if it exists, otherwise returns `None`.
+    /// Returns a reference to the data associated with the given position if it
+    /// exists, otherwise returns `None`.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     /// assert_eq!(map.get(HexPosition(0, 0)), Some(f64::default()).as_ref());
@@ -248,42 +269,54 @@ impl<T: Default, S: Number> HexLayout<T, S> {
         self.0.get(&pos)
     }
 
-    /// Returns a mutable reference to the data associated with the given position if it exists, otherwise returns `None`.
+    /// Returns a mutable reference to the data associated with the given
+    /// position if it exists, otherwise returns `None`.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
-    /// assert_eq!(map.get_mut(HexPosition(0, 0)), Some(f64::default()).as_mut());
+    /// assert_eq!(
+    ///     map.get_mut(HexPosition(0, 0)),
+    ///     Some(f64::default()).as_mut()
+    /// );
     /// assert_eq!(map.get_mut(HexPosition(0, 1)), None);
     /// ```
     pub fn get_mut(&mut self, pos: HexPosition<S>) -> Option<&mut T> {
         self.0.get_mut(&pos)
     }
 
-    /// Returns a mutable reference to the data associated with the given position if it exists, otherwise returns `None`.
+    /// Returns a mutable reference to the data associated with the given
+    /// position if it exists, otherwise returns `None`.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
-    /// assert_eq!(map.get_mut(HexPosition(0, 0)), Some(f64::default()).as_mut());
+    /// assert_eq!(
+    ///     map.get_mut(HexPosition(0, 0)),
+    ///     Some(f64::default()).as_mut()
+    /// );
     /// assert_eq!(map.get_mut(HexPosition(0, 1)), None);
     /// ```
     pub fn set(&mut self, pos: HexPosition<S>, data: T) -> Option<T> {
         self.0.insert(pos, data)
     }
 
-    /// Deletes the data at the given position if it exists. Returns the data if it existed, otherwise returns `None`.
+    /// Deletes the data at the given position if it exists. Returns the data if
+    /// it existed, otherwise returns `None`.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -301,7 +334,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -318,7 +352,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -330,12 +365,14 @@ impl<T: Default, S: Number> HexLayout<T, S> {
         self.0.values()
     }
 
-    /// Returns an iterator over all the data as mutable references in the layout.
+    /// Returns an iterator over all the data as mutable references in the
+    /// layout.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -356,8 +393,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// ## Examples
     ///
     /// ```rust
-    ///
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -375,7 +412,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -390,7 +428,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(1, HexPosition(0, 0));
     ///
@@ -409,7 +448,8 @@ impl<T: Default, S: Number> HexLayout<T, S> {
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<f64, isize> = HexLayout::new_from_range(7, HexPosition(0, 0));
     ///
@@ -423,12 +463,14 @@ impl<T: Default, S: Number> HexLayout<T, S> {
         self.0.clear();
     }
 
-    /// Computes the logical AND operation between two layouts, returning a set of positions that exist in both layouts.
+    /// Computes the logical AND operation between two layouts, returning a set
+    /// of positions that exist in both layouts.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map1: HexLayout<f64, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     /// let mut map2: HexLayout<f64, isize> = HexLayout::new_from_range(2, HexPosition(-2, 0));
@@ -450,12 +492,14 @@ impl<T: Default, S: Number> HexLayout<T, S> {
             .collect()
     }
 
-    /// Computes the logical OR operation between two layouts, returning a set of all unique positions that exist in either layout.
+    /// Computes the logical OR operation between two layouts, returning a set
+    /// of all unique positions that exist in either layout.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map1: HexLayout<f64, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     /// let mut map2: HexLayout<f64, isize> = HexLayout::new_from_range(2, HexPosition(-2, 0));
@@ -471,12 +515,14 @@ impl<T: Default, S: Number> HexLayout<T, S> {
         result
     }
 
-    /// Computes the logical XOR operation between two layouts, returning a set of positions that exist in one layout but not the other.
+    /// Computes the logical XOR operation between two layouts, returning a set
+    /// of positions that exist in one layout but not the other.
     ///
     /// ## Examples
     ///
     /// ```rust
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map1: HexLayout<f64, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     /// let mut map2: HexLayout<f64, isize> = HexLayout::new_from_range(2, HexPosition(-2, 0));
@@ -497,27 +543,35 @@ impl<T: Default, S: Number> HexLayout<T, S> {
 
 impl<S: Number> HexLayout<bool, S> {
     /// Finds the shortest path between two positions on a hexagonal grid.
-    /// To use the `pathfinding` feature, the data associated with each position must be a [bool] in order to represent whether the position is blocked or not.
-    /// ``True`` means that the position is blocked, and ``False`` means that the position is not blocked.
+    /// To use the `pathfinding` feature, the data associated with each position
+    /// must be a [bool] in order to represent whether the position is blocked
+    /// or not. ``True`` means that the position is blocked, and ``False``
+    /// means that the position is not blocked.
     ///
     /// # Parameters
     ///
-    /// - `from`: The starting position on the hexagonal grid. This position must be a `HexPosition<S>`.
-    /// - `to`: The target position on the hexagonal grid. This position must also be a `HexPosition<S>`.
+    /// - `from`: The starting position on the hexagonal grid. This position
+    ///   must be a `HexPosition<S>`.
+    /// - `to`: The target position on the hexagonal grid. This position must
+    ///   also be a `HexPosition<S>`.
     ///
     /// # Returns
     ///
-    /// This function returns a `Vec<HexPosition<S>>` representing the shortest path from `from` to `to`.
-    /// The path is returned in order from start to end. If `from` and `to` are the same, the vector will contain only `from`.
+    /// This function returns a `Vec<HexPosition<S>>` representing the shortest
+    /// path from `from` to `to`. The path is returned in order from start
+    /// to end. If `from` and `to` are the same, the vector will contain only
+    /// `from`.
     ///
     /// # Panics
     ///
-    /// The function will panic if either `from` or `to` are not present in the hexagonal grid.
+    /// The function will panic if either `from` or `to` are not present in the
+    /// hexagonal grid.
     ///
     /// # Example
     ///
     /// ```rust
-    /// use hexing::{HexPosition, layout::HexLayout};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<bool, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     ///
@@ -534,13 +588,25 @@ impl<S: Number> HexLayout<bool, S> {
     /// for pos in &path {
     ///     println!("Position: {:?}", pos);
     /// }
-    /// assert_eq!(path, vec![HexPosition(0, 0), HexPosition(-1, 0), HexPosition(-2, 1), HexPosition(-2, 2), HexPosition(-1, 2), HexPosition(0, 2)]);
+    /// assert_eq!(
+    ///     path,
+    ///     vec![
+    ///         HexPosition(0, 0),
+    ///         HexPosition(-1, 0),
+    ///         HexPosition(-2, 1),
+    ///         HexPosition(-2, 2),
+    ///         HexPosition(-1, 2),
+    ///         HexPosition(0, 2)
+    ///     ]
+    /// );
     /// ```
     ///
     /// # Note
     ///
-    /// This implementation uses the A* algorithm to guarantee finding the shortest path.
-    /// The heuristic used is tailored to hexagonal grids, where the axial distance is used to estimate the cost to the destination.
+    /// This implementation uses the A* algorithm to guarantee finding the
+    /// shortest path. The heuristic used is tailored to hexagonal grids,
+    /// where the axial distance is used to estimate the cost to the
+    /// destination.
     pub fn pathfinding(&self, from: HexPosition<S>, to: HexPosition<S>) -> Vec<HexPosition<S>> {
         if from == to {
             return vec![from];
@@ -593,28 +659,32 @@ impl<S: Number> HexLayout<bool, S> {
         path
     }
 
-    /// Calculates the positions visible from a given position on a hexagonal map.
+    /// Calculates the positions visible from a given position on a hexagonal
+    /// map.
     ///
-    /// This function returns a set of positions that are visible from the `center` position.
-    /// Visibility is determined based on distance and obstacles. Obstacles are defined as positions
-    /// with an associated value of `true`.
+    /// This function returns a set of positions that are visible from the
+    /// `center` position. Visibility is determined based on distance and
+    /// obstacles. Obstacles are defined as positions with an associated
+    /// value of `true`.
     ///
     /// # Parameters
     ///
     /// - `center`: The starting position from which visibility is calculated.
-    /// - `range`: An optional parameter specifying the maximum visibility range. If `None`, there is no
-    ///   range limit.
+    /// - `range`: An optional parameter specifying the maximum visibility
+    ///   range. If `None`, there is no range limit.
     ///
     /// # Return Value
     ///
-    /// Returns a `HashSet` containing the positions visible from `center`. A position is considered
-    /// visible if it is within the specified range (if a radius is provided) and if there are no obstacles
-    /// blocking the line of sight between `center` and the position.
+    /// Returns a `HashSet` containing the positions visible from `center`. A
+    /// position is considered visible if it is within the specified range
+    /// (if a radius is provided) and if there are no obstacles blocking the
+    /// line of sight between `center` and the position.
     ///
     /// # Example
     ///
     /// ```
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map = HexLayout::new_from_range(6, HexPosition(0, 0));
     ///
@@ -632,7 +702,7 @@ impl<S: Number> HexLayout<bool, S> {
     /// let reachable_positions_with_range = map.field_of_view(start_pos, Some(range));
     ///
     /// for pos in reachable_positions {
-    ///    println!("{}", pos);
+    ///     println!("{}", pos);
     /// }
     ///
     /// for pos in reachable_positions_with_range {
@@ -672,26 +742,31 @@ impl<S: Number> HexLayout<bool, S> {
         visibles
     }
 
-    /// Computes the set of positions reachable from a given starting position within a specified range.
+    /// Computes the set of positions reachable from a given starting position
+    /// within a specified range.
     ///
-    /// This function performs a breadth-first search to determine all the positions that can be reached from the
-    /// starting position `pos` within a movement range of `range` steps. It accounts for obstacles or blocked positions
-    /// using the `neighbors_unblocked` method, which provides a list of neighboring positions that are not blocked.
+    /// This function performs a breadth-first search to determine all the
+    /// positions that can be reached from the starting position `pos`
+    /// within a movement range of `range` steps. It accounts for obstacles or
+    /// blocked positions using the `neighbors_unblocked` method, which
+    /// provides a list of neighboring positions that are not blocked.
     ///
     /// # Arguments
     ///
-    /// * `pos` - The starting position from which to compute the field of move. It is of type `HexPosition<S>`.
-    /// * `range` - The maximum number of steps that can be taken from the starting position. It is of type `usize`.
+    /// * `pos` - The starting position from which to compute the field of move.
+    ///   It is of type `HexPosition<S>`.
+    /// * `range` - The maximum number of steps that can be taken from the
+    ///   starting position. It is of type `usize`.
     ///
     /// # Returns
     ///
-    /// Returns a `HashSet<HexPosition<S>>` containing all the positions reachable within the specified range, including
-    /// the starting position itself.
+    /// Returns a `HashSet<HexPosition<S>>` containing all the positions
+    /// reachable within the specified range, including the starting
+    /// position itself.
     ///
     /// # Example
     ///
     /// ```rust
-    ///
     /// use hexing::HexPosition;
     /// use hexing::layout::HexLayout;
     ///
@@ -713,14 +788,17 @@ impl<S: Number> HexLayout<bool, S> {
     ///
     /// # Notes
     ///
-    /// The function uses a breadth-first approach, iterating level by level up to the specified range. It maintains
-    /// a set of visited positions to avoid reprocessing and ensure that each position is added only once. The number
-    /// of positions added at each level is managed to ensure the function scales efficiently with the size of the range.
+    /// The function uses a breadth-first approach, iterating level by level up
+    /// to the specified range. It maintains a set of visited positions to
+    /// avoid reprocessing and ensure that each position is added only once. The
+    /// number of positions added at each level is managed to ensure the
+    /// function scales efficiently with the size of the range.
     ///
     /// # Complexity
     ///
-    /// The time complexity is O(n), where n is the number of positions within the specified range, assuming neighbor
-    /// checks are constant-time operations.
+    /// The time complexity is O(n), where n is the number of positions within
+    /// the specified range, assuming neighbor checks are constant-time
+    /// operations.
     pub fn field_of_move(&self, pos: HexPosition<S>, range: usize) -> HashSet<HexPosition<S>> {
         let mut visited = HashSet::new();
         visited.insert(pos);
@@ -754,8 +832,8 @@ impl<S: Number> HexLayout<bool, S> {
     /// # Example
     ///
     /// ```
-    ///
-    /// use hexing::{layout::HexLayout, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::layout::HexLayout;
     ///
     /// let mut map: HexLayout<bool, isize> = HexLayout::new_from_range(3, HexPosition(0, 0));
     ///

@@ -1,7 +1,10 @@
 //! # Hexing
 //! All functions related to calculations in a hexagonal grid.
-//! For more information, check the [documentation](https://crates.io/crates/hexing) or the [GitHub repository](https://github.com/cocosol007/hexing).
-//! Note that all algorithms are inspired by the [Hexagonal Grid Algorithm](https://www.redblobgames.com/grids/hexagons/).
+//! For more information, check the
+//! [documentation](https://crates.io/crates/hexing) or the
+//! [GitHub repository](https://github.com/cocosol007/hexing).
+//! Note that all algorithms are inspired by the
+//! [Hexagonal Grid Algorithm](https://www.redblobgames.com/grids/hexagons/).
 //!
 //! ## Copyright (C) 2024  CoCoSol
 //!
@@ -21,7 +24,6 @@
 //! ## Usages
 //!
 //! ```rust
-//!
 //! use hexing::*;
 //!
 //! // Create hexagonal positions
@@ -35,7 +37,10 @@
 //! // Calculate the distance between two hexagonal positions
 //! let other_position = HexPosition::new(-1, 1);
 //! let distance = position.distance(other_position);
-//! println!("Distance between {:?} and {:?}: {:?}", position, other_position, distance);
+//! println!(
+//!     "Distance between {:?} and {:?}: {:?}",
+//!     position, other_position, distance
+//! );
 //!
 //! // Iterate over a hexagonal ring
 //! let radius = 2;
@@ -53,30 +58,32 @@
 //!
 //! // Rotate the position by 120 degrees (2 times 60 degrees)
 //! let rotated_position = position.rotation(2);
-//! println!("Position after 120 degrees rotation: {:?}", rotated_position);
+//! println!(
+//!     "Position after 120 degrees rotation: {:?}",
+//!     rotated_position
+//! );
 //!
 //! // Reflect the position
 //! let reflected_position = position.reflect();
 //! println!("Position after reflection: {:?}", reflected_position);
-//!
 //! ```
 //!
-//! This example demonstrates basic usage of the `hexing` library, including creating hexagonal positions, converting to pixel coordinates, calculating distances, and iterating over hexagonal rings and spirals.
+//! This example demonstrates basic usage of the `hexing` library, including
+//! creating hexagonal positions, converting to pixel coordinates, calculating
+//! distances, and iterating over hexagonal rings and spirals.
 
 pub mod layout;
 pub mod utils;
-use utils::{axial_round, hexagonal_lerp};
-
-use std::{
-    fmt::Display,
-    hash::{self, Hash},
-    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign},
+use std::fmt::Display;
+use std::hash::{self, Hash};
+use std::ops::{
+    Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
 };
 
 use paste::paste;
-
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
+use utils::{axial_round, hexagonal_lerp};
 
 /// Represents a number that can be used in calculations for hexagonal grids.
 pub trait Number:
@@ -109,29 +116,17 @@ pub trait Number:
 
     /// Returns the maximum of `self` and `other`.
     fn max(self, other: Self) -> Self {
-        if self > other {
-            self
-        } else {
-            other
-        }
+        if self > other { self } else { other }
     }
 
     /// Returns the minimum of `self` and `other`.
     fn min(self, other: Self) -> Self {
-        if self < other {
-            self
-        } else {
-            other
-        }
+        if self < other { self } else { other }
     }
 
     /// Returns the absolute value of `self`.
     fn abs(self) -> Self {
-        if self < Self::ZERO {
-            -self
-        } else {
-            self
-        }
+        if self < Self::ZERO { -self } else { self }
     }
 
     /// Converts an `usize` to `Self`.
@@ -262,7 +257,8 @@ impl HexDirection {
 }
 
 /// A hexagonal ring iterator.
-/// This this the rust implementation of the [documentation](https://www.redblobgames.com/grids/hexagons/#rings).
+/// This this the rust implementation of the
+/// [documentation](https://www.redblobgames.com/grids/hexagons/#rings).
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexRing<T: Number> {
@@ -314,7 +310,8 @@ impl<T: Number> Iterator for HexRing<T> {
 }
 
 /// A hexagonal spiral iterator.
-/// This this the rust implementation of the [documentation](https://www.redblobgames.com/grids/hexagons/#rings) spiral.
+/// This this the rust implementation of the
+/// [documentation](https://www.redblobgames.com/grids/hexagons/#rings) spiral.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexSpiral<T: Number> {
@@ -354,7 +351,8 @@ impl<T: Number> Iterator for HexSpiral<T> {
 }
 
 /// A hexagonal line iterator.
-/// For more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
+/// For more information, see the
+/// [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct HexLine<T: Number> {
@@ -440,7 +438,8 @@ impl<T: Number> HexPosition<T> {
     }
 
     /// Converts a pixel coordinate into a [HexPosition].
-    /// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#pixel-to-hex).
+    /// for more information, see the
+    /// [documentation](https://www.redblobgames.com/grids/hexagons/#pixel-to-hex).
     ///
     /// # Example
     ///
@@ -542,7 +541,8 @@ impl<T: Number> HexPosition<T> {
     }
 
     /// Returns the line between two [HexPosition]s as a iterator.
-    /// For more information about how it's calculated, check the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing)
+    /// For more information about how it's calculated, check the
+    /// [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing)
     ///
     /// # Example
     ///
@@ -591,8 +591,8 @@ impl<T: Number> HexPosition<T> {
     }
 
     /// Returns the reflection of the current [HexPosition].
-    /// The reflection is the position with the same distance from the origin but in the opposite direction.
-    /// (like a central symmetry)
+    /// The reflection is the position with the same distance from the origin
+    /// but in the opposite direction. (like a central symmetry)
     ///
     /// # Example
     ///

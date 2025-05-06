@@ -1,7 +1,7 @@
 use_try_shorthand = true
 use_field_init_shorthand = true
 
-version = "Two"
+style_edition = "2024"
 error_on_line_overflow = true
 error_on_unformatted = true
 

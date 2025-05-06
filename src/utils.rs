@@ -18,7 +18,8 @@
 use super::*;
 
 /// An utility function for axial round.
-/// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#rounding).
+/// for more information, see the
+/// [documentation](https://www.redblobgames.com/grids/hexagons/#rounding).
 ///
 /// # Example
 ///
@@ -46,7 +47,8 @@ pub fn axial_round(pos: (f32, f32)) -> HexPosition<i32> {
 }
 
 /// An utility function for lerp between two hexagonal positions.
-/// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
+/// for more information, see the
+/// [documentation](https://www.redblobgames.com/grids/hexagons/#line-drawing).
 ///
 /// # Example
 ///
@@ -66,7 +68,8 @@ pub fn hexagonal_lerp<T: Number>(a: HexPosition<T>, b: HexPosition<T>, t: f32) -
 }
 
 /// An utility function for linear interpolation.
-/// for more information, see the [documentation](https://en.wikipedia.org/wiki/Linear_interpolation).
+/// for more information, see the
+/// [documentation](https://en.wikipedia.org/wiki/Linear_interpolation).
 ///
 /// # Example
 ///
@@ -82,7 +85,8 @@ pub fn lerp(a: f32, b: f32, t: f32) -> f32 {
 }
 
 /// An utility function for clamp.
-/// for more information, see the [documentation](https://en.wikipedia.org/wiki/Clamping_(computing)).
+/// for more information, see the
+/// [documentation](https://en.wikipedia.org/wiki/Clamping_(computing)).
 ///
 /// # Example
 ///
@@ -104,7 +108,8 @@ pub fn clamp<T: Number>(value: T, min: T, max: T) -> T {
 }
 
 /// An utility function for getting the neighbors of a hexagonal position.
-/// for more information, see the [documentation](https://www.redblobgames.com/grids/hexagons/#neighbors).
+/// for more information, see the
+/// [documentation](https://www.redblobgames.com/grids/hexagons/#neighbors).
 ///
 /// # Example
 ///
@@ -124,20 +129,25 @@ pub fn neighbors<T: Number>(pos: HexPosition<T>) -> Vec<HexPosition<T>> {
     neighbors
 }
 
-/// The `HexBound` struct defines a hexagonal area centered around a specific hexagonal position.
+/// The `HexBound` struct defines a hexagonal area centered around a specific
+/// hexagonal position.
 ///
-/// This struct encapsulates a central position (`HexPosition<T>`) and a radius (`usize`).
-/// It allows checking whether a given position is within this hexagonal area.
+/// This struct encapsulates a central position (`HexPosition<T>`) and a radius
+/// (`usize`). It allows checking whether a given position is within this
+/// hexagonal area.
 ///
-/// Note that this feature is inspired by the [hexx](https://github.com/ManevilleF/hexx?tab=readme-ov-file#wrapping) project,
+/// Note that this feature is inspired by the
+/// [hexx](https://github.com/ManevilleF/hexx?tab=readme-ov-file#wrapping) project,
 /// which provides similar tools for working with hexagonal grids in Rust.
 ///
 /// # Type Parameters
-/// - `T`: A type that implements the `Number` trait. This type is used for the hexagonal coordinates in the `HexPosition` struct.
+/// - `T`: A type that implements the `Number` trait. This type is used for the
+///   hexagonal coordinates in the `HexPosition` struct.
 ///
 /// # Example
 /// ```
-/// use hexing::{utils::HexBound, HexPosition};
+/// use hexing::HexPosition;
+/// use hexing::utils::HexBound;
 ///
 /// let center = HexPosition::new(0, 0);
 /// let bound = HexBound::new(center, 2);
@@ -158,7 +168,8 @@ impl<T: Number> HexBound<T> {
     ///
     /// # Example
     /// ```
-    /// use hexing::{utils::HexBound, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::utils::HexBound;
     ///
     /// let center = HexPosition::new(0, 0);
     /// let bound = HexBound::new(center, 2);
@@ -174,7 +185,8 @@ impl<T: Number> HexBound<T> {
     ///
     /// # Example
     /// ```
-    /// use hexing::{utils::HexBound, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::utils::HexBound;
     ///
     /// let bound = HexBound::new(HexPosition::new(0, 0), 2);
     /// assert_eq!(bound.radius(), 2);
@@ -186,11 +198,13 @@ impl<T: Number> HexBound<T> {
     /// Returns the central position of the hexagonal area.
     ///
     /// # Returns
-    /// Returns a `HexPosition<T>` representing the central position of the area.
+    /// Returns a `HexPosition<T>` representing the central position of the
+    /// area.
     ///
     /// # Example
     /// ```
-    /// use hexing::{utils::HexBound, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::utils::HexBound;
     ///
     /// let center = HexPosition::new(0, 0);
     /// let bound = HexBound::new(center, 2);
@@ -206,11 +220,13 @@ impl<T: Number> HexBound<T> {
     /// - `pos`: The hexagonal position to check.
     ///
     /// # Returns
-    /// Returns `true` if the position is within the hexagonal area, `false` otherwise.
+    /// Returns `true` if the position is within the hexagonal area, `false`
+    /// otherwise.
     ///
     /// # Example
     /// ```
-    /// use hexing::{utils::HexBound, HexPosition};
+    /// use hexing::HexPosition;
+    /// use hexing::utils::HexBound;
     ///
     /// let center = HexPosition::new(0, 0);
     /// let bound = HexBound::new(center, 2);
